@@ -13,18 +13,29 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.contrib import admin
+from django.contrib.auth.views import LogoutView
 from django.urls import path
 
-from vacancies.views import MainView, VacanciesAllView, VacancyDetailView, CompanyDetailView, VacanciesBySpeciality, \
+from accounts.views import MyLoginView, MySignupView
+from vacancies.views.my_company import CompanyEmptyForm, CompanyFullForm, CompanyLetsstart
+from vacancies.views.views import MainView, VacanciesAllView, VacancyDetailView, CompanyDetailView, VacanciesBySpeciality, \
     custom_handler404, custom_handler500
 
 handler404 = custom_handler404
 handler500 = custom_handler500
 
 urlpatterns = [
+    path("admin/", admin.site.urls),
     path('', MainView.as_view(), name='MainView'),
     path('vacancies/', VacanciesAllView.as_view(), name='VacanciesAllView'),
     path('vacancies/<int:pk>/', VacancyDetailView.as_view(), name='VacancyDetailView'),
     path('vacancies/<str:code>/', VacanciesBySpeciality.as_view(), name='VacanciesBySpeciality'),
     path('companies/<int:pk>/', CompanyDetailView.as_view(), name='CompanyDetailView'),
+    path('login/', MyLoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('signup/', MySignupView.as_view(), name='signup'),
+    path('mycompany/letsstart/', CompanyLetsstart.as_view(), name='company_start'),
+    path('mycompany/create/', CompanyEmptyForm.as_view(), name='company_empty'),
+    path('mycompany/', CompanyFullForm.as_view(), name='company_full'),
 ]
