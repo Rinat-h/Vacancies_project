@@ -6,10 +6,6 @@ from vacancies.forms import CompanyForm
 from vacancies.models import Company
 
 
-class VacancySend(View):
-    pass
-
-
 class CompanyLetsstart(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
@@ -19,13 +15,12 @@ class CompanyLetsstart(LoginRequiredMixin, View):
             return render(request, 'vacancies/company-create.html')
 
 
-class CompanyEmptyForm(LoginRequiredMixin, View):
+class CompanyCreate(LoginRequiredMixin, View):
 
     def get(self, request):
         return render(request, 'vacancies/company-edit.html', context={
             'form': CompanyForm,
         })
-
 
     def post(self, request):
         form = CompanyForm(request.POST)
@@ -39,7 +34,7 @@ class CompanyEmptyForm(LoginRequiredMixin, View):
         })
 
 
-class CompanyFullForm(LoginRequiredMixin, View):
+class CompanyUpdate(LoginRequiredMixin, View):
 
     def get(self, request):
         company = get_object_or_404(Company, owner=request.user)

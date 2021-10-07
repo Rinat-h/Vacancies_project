@@ -18,7 +18,8 @@ from django.contrib.auth.views import LogoutView
 from django.urls import path
 
 from accounts.views import MyLoginView, MySignupView
-from vacancies.views.my_company import CompanyEmptyForm, CompanyFullForm, CompanyLetsstart
+from vacancies.views.my_company import CompanyCreate, CompanyUpdate, CompanyLetsstart
+from vacancies.views.my_vacancies import MyVacanciesStart, MyVacanciesCreate, MyVacanciesList, MyVacanciesEdit
 from vacancies.views.views import MainView, VacanciesAllView, VacancyDetailView, CompanyDetailView, VacanciesBySpeciality, \
     custom_handler404, custom_handler500
 
@@ -36,6 +37,10 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('signup/', MySignupView.as_view(), name='signup'),
     path('mycompany/letsstart/', CompanyLetsstart.as_view(), name='company_start'),
-    path('mycompany/create/', CompanyEmptyForm.as_view(), name='company_empty'),
-    path('mycompany/', CompanyFullForm.as_view(), name='company_full'),
+    path('mycompany/create/', CompanyCreate.as_view(), name='company_empty'),
+    path('mycompany/', CompanyUpdate.as_view(), name='company_full'),
+    path('mycompany/vacancies/letsstart/', MyVacanciesStart.as_view(), name='vacancy_start'),
+    path('mycompany/vacancies/create/', MyVacanciesCreate.as_view(), name='vacancy_create'),
+    path('mycompany/vacancies/', MyVacanciesList.as_view(), name='vacancy_list'),
+    path('mycompany/vacancies/<int:pk>', MyVacanciesEdit.as_view(), name='vacancy_edit'),
 ]

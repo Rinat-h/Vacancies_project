@@ -12,9 +12,10 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 
+from django.contrib.messages import constants as message_constants
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -26,7 +27,6 @@ SECRET_KEY = 'django-insecure-zcl()z)08+(u*7#pdt_jm$sy+jn-an2s7+s)mv@%0^z5q^su_)
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
-
 
 # Application definition
 
@@ -73,7 +73,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'vacancies_project.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -83,7 +82,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -103,7 +101,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -116,7 +113,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -134,3 +130,10 @@ LOGOUT_REDIRECT_URL = '/login'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+MESSAGE_TAGS = {
+    message_constants.DEBUG: 'debug',
+    message_constants.INFO: 'info',
+    message_constants.SUCCESS: 'success',
+    message_constants.WARNING: 'warning',
+    message_constants.ERROR: 'danger',
+}
