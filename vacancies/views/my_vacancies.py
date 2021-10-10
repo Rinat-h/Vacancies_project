@@ -70,7 +70,7 @@ class MyVacanciesEdit(LoginRequiredMixin, View):
         return render(request, 'vacancies/vacancy-edit.html', context={
             'form': form,
             'title': 'Вакансии компании',
-            'vacancy_title': vacancy.title
+            'vacancy': vacancy
         })
 
 

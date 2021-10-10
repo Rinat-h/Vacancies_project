@@ -1,6 +1,7 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Row, Column
 from django import forms
+from django.forms import ModelChoiceField
 
 from vacancies.models import Company, Vacancy, Specialty, Application
 
@@ -20,9 +21,14 @@ class CompanyForm(forms.ModelForm):
         self.helper.form_method = 'post'
 
 
+class SpecialtyChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return obj.title
+
+
 class VacancyForm(forms.ModelForm):
 
-    specialty = forms.SpecialtyChoiceField(queryset=Specialty.objects.all(), empty_label='Выберите специализацию')
+    specialty = SpecialtyChoiceField(queryset=Specialty.objects.all(), empty_label='Выберите специализацию')
 
     class Meta:
         model = Vacancy
