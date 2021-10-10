@@ -53,7 +53,7 @@ class MyVacanciesEdit(LoginRequiredMixin, View):
         return render(request, 'vacancies/vacancy-edit.html', context={
             'form': form,
             'title': 'Вакансии компании',
-            'vacancy_title': vacancy.title
+            'vacancy': vacancy
         })
 
     def post(self, request, pk):
@@ -85,6 +85,10 @@ class MyVacanciesList(LoginRequiredMixin, View):
         })
 
 
-class VacancySend(View):
-    pass
+class VacancySend(LoginRequiredMixin, View):
 
+    def get(self, request, pk):
+        return render(request, 'vacancies/sent.html', context={
+            'pk': pk,
+            'title': 'Отклик отправлен'
+        })

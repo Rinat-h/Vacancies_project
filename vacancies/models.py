@@ -39,7 +39,7 @@ class Vacancy(models.Model):
 
 class Application(models.Model):
     written_username = models.CharField(max_length=64)
-    written_phone = models.CharField(max_length=16)
-    written_cover_letter = models.TextField
+    written_phone = models.CharField(max_length=32)
+    written_cover_letter = models.TextField()
     vacancy = models.ManyToManyField(Vacancy, related_name='applications')
     user = models.ManyToManyField(User, related_name="applications", null=True)

@@ -1,9 +1,10 @@
 from django.db.models import Count
-from django.http import HttpResponseNotFound, HttpResponseServerError
-from django.shortcuts import get_object_or_404
-from django.views.generic import ListView, DetailView
+from django.http import HttpResponseNotFound, HttpResponseServerError, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views.generic import ListView, DetailView, CreateView
 from django.views.generic.base import TemplateView
 
+from vacancies.forms import ApplicationForm
 from vacancies.models import Vacancy, Specialty, Company
 
 
@@ -52,15 +53,33 @@ class VacanciesBySpeciality(ListView):
         return context
 
 
-class VacancyDetailView(DetailView):
-    model = Vacancy
+class VacancyDetailView(CreateView):
     template_name = 'vacancies/vacancy.html'
-    context_object_name = 'vacancy'
+    form_class = ApplicationForm
+    success_url = 'sent'
+
+    def get_context_data(self, **kwargs):
+        kwargs['vacancy'] = get_object_or_404(Vacancy, pk=self.kwargs['pk'])
+        kwargs['previous_page'] = self.request.META['HTTP_REFERER']
+        return super().get_context_data(**kwargs)
+
+    def form_valid(self, form):
+        vacancy = get_object_or_404(Vacancy, pk=self.kwargs['pk'])
+        form = ApplicationForm(self.request.POST)
+        application_form = form.save(commit=False)
+        application_form.save()
+        application_form.user.add(self.request.user)
+        application_form.vacancy.add(vacancy)
+        return super().form_valid(form)
 
 
 class CompanyDetailView(DetailView):
     model = Company
     template_name = 'vacancies/company.html'
     context_object_name = 'company'
+
+    def get_context_data(self, **kwargs):
+        kwargs['previous_page'] = self.request.META['HTTP_REFERER']
+        return super().get_context_data(**kwargs)
 
 
