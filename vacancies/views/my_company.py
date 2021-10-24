@@ -4,6 +4,7 @@ from django.views.generic.base import View
 
 from vacancies.forms import CompanyForm
 from vacancies.models import Company
+from django.contrib import messages
 
 
 class CompanyLetsstart(LoginRequiredMixin, View):
@@ -23,11 +24,12 @@ class CompanyCreate(LoginRequiredMixin, View):
         })
 
     def post(self, request):
-        form = CompanyForm(request.POST)
+        form = CompanyForm(request.POST, request.FILES)
         if form.is_valid():
             company = form.save(commit=False)
             company.owner = request.user
             company.save()
+            messages.success(request, 'Вы создали компанию!')
             return redirect('company_full')
         return render(request, 'vacancies/company-edit.html', context={
             'form': form,
@@ -45,11 +47,12 @@ class CompanyUpdate(LoginRequiredMixin, View):
 
     def post(self, request):
         company = get_object_or_404(Company, owner=request.user)
-        form = CompanyForm(request.POST, instance=company)
+        form = CompanyForm(request.POST, request.FILES, instance=company)
         if form.is_valid():
             company = form.save(commit=False)
             company.owner = request.user
             company.save()
+            messages.success(request, 'Информация о компании обновлена')
             return redirect('company_full')
         return render(request, 'vacancies/company-edit.html', context={
             'form': form,

@@ -12,7 +12,9 @@ class MyVacanciesStart(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         company = Company.objects.filter(owner=request.user)
-        if Vacancy.objects.filter(company__in=company):
+        if not company:
+            return redirect('company_start')
+        elif Vacancy.objects.filter(company__in=company):
             return redirect('vacancy_list')
         else:
             return render(request, 'vacancies/vacancy-create.html', context={

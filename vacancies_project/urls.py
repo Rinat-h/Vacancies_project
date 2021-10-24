@@ -15,14 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.contrib.auth.views import LogoutView
-from django.urls import path
+from django.urls import path, re_path
+from django.conf import settings
+from django.conf.urls.static import static
 
 from accounts.views import MyLoginView, MySignupView
 from vacancies.views.my_company import CompanyCreate, CompanyUpdate, CompanyLetsstart
+from vacancies.views.my_resume import MyResumeStart, MyResumeCreate, MyResumeUpdate
 from vacancies.views.my_vacancies import MyVacanciesStart, MyVacanciesCreate, MyVacanciesList, MyVacanciesEdit, \
     VacancySend
-from vacancies.views.views import MainView, VacanciesAllView, VacancyDetailView, CompanyDetailView, VacanciesBySpeciality, \
-    custom_handler404, custom_handler500
+from vacancies.views.views import MainView, VacanciesAllView, VacancyDetailView, CompanyDetailView, \
+    VacanciesBySpeciality, \
+    custom_handler404, custom_handler500, VacancySearch
 
 handler404 = custom_handler404
 handler500 = custom_handler500
@@ -45,4 +49,12 @@ urlpatterns = [
     path('mycompany/vacancies/', MyVacanciesList.as_view(), name='vacancy_list'),
     path('mycompany/vacancies/<int:pk>', MyVacanciesEdit.as_view(), name='vacancy_edit'),
     path('vacancies/<int:pk>/sent', VacancySend.as_view(), name='vacancy_send'),
+    path('myresume/letsstart/', MyResumeStart.as_view(), name='resume_start'),
+    path('myresume/create/', MyResumeCreate.as_view(), name='resume_create'),
+    path('myresume/', MyResumeUpdate.as_view(), name='resume_edit'),
+    path('search', VacancySearch.as_view(), name='vacancy_search')
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

@@ -1,15 +1,16 @@
-from django.db.models import Count
-from django.http import HttpResponseNotFound, HttpResponseServerError, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, redirect, render
+from django.db.models import Count, Q
+from django.http import HttpResponseNotFound, HttpResponseServerError
+from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, CreateView
 from django.views.generic.base import TemplateView
+from django.urls import reverse
 
-from vacancies.forms import ApplicationForm
+from vacancies.forms import ApplicationForm, VacancySearchForm
 from vacancies.models import Vacancy, Specialty, Company
 
 
 def custom_handler404(request, exception):
-    return HttpResponseNotFound('Извините, проект еще в доработке')
+    return HttpResponseNotFound('Что-то пошло не так')
 
 
 def custom_handler500(request):
@@ -19,10 +20,19 @@ def custom_handler500(request):
 class MainView(TemplateView):
     template_name = "vacancies/index.html"
 
+    def get(self, request, *args, **kwargs):
+        form = VacancySearchForm(self.request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            if query:
+                return redirect(reverse('vacancy_search') + "?s=%s" % query)
+        return super().get(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super(MainView, self).get_context_data(**kwargs)
         context['vacancies_by_specialty'] = Specialty.objects.annotate(num_vacan=Count('vacancies'))
         context['vacancies_by_company'] = Company.objects.annotate(num_vacan=Count('companies'))
+        context['form'] = VacancySearchForm
         return context
 
 
@@ -31,7 +41,7 @@ class VacanciesAllView(ListView):
     template_name = 'vacancies/vacancies.html'
     context_object_name = 'vacancies'
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self, *args, object_list=None, **kwargs):
         context = super().get_context_data()
         context['title'] = 'Все вакансии'
         return context
@@ -83,3 +93,27 @@ class CompanyDetailView(DetailView):
         return super().get_context_data(**kwargs)
 
 
+class VacancySearch(ListView):
+    model = Vacancy
+    template_name = 'vacancies/search.html'
+    context_object_name = 'vacancies'
+
+    def get(self, request, *args, **kwargs):
+        form = VacancySearchForm(self.request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            if query:
+                return redirect(reverse('vacancy_search') + "?s=%s" % query)
+        return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        kwargs['form'] = VacancySearchForm
+        return super().get_context_data(**kwargs)
+
+    def get_queryset(self):
+        query = self.request.GET.get('s')
+        if query:
+            queryset = Vacancy.objects.filter(
+                Q(title__icontains=query) | Q(skills__icontains=query) | Q(description__icontains=query)
+            )
+            return queryset

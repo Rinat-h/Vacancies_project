@@ -2,35 +2,16 @@
 
 {% block container %}
 
-{#<head>#}
-{#  <meta charset="UTF-8">#}
-{#  <title>Создать вакансии | Джуманджи</title>#}
-{#  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">#}
-{#  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">#}
-{#  <style>#}
-{#    body {#}
-{#      background-color: #F6F2E6;#}
-{#    }#}
-{#  </style>#}
-{#</head>#}
     <main class="container mt-3 pb-5">
     <div class="row mt-5">
+
         {% include 'vacancies/company_panel.html' with vacancy_active=1 %}
-{#      <div class="col-12 col-lg-4">#}
-{#        <aside class="pt-3 pb-4 px-4 mb-5 card">#}
-{#          <h1 class="h4 pt-2 pb-2">Моя компания</h1>#}
-{#          <div class="nav flex-column nav-pills">#}
-{#            <a class="nav-link" href="#">1. Информация о&nbsp;компании</a>#}
-{#            <a class="nav-link active" href="#">2. Вакансии</a>#}
-{#          </div>#}
-{#        </aside>#}
-{#      </div>#}
+
         <div class="col-12 col-lg-8">
             <div class="card">
                 <div class="card-body px-4 pb-4">
                     <section class="tab-pane fade show active">
-{#    <section class="col-12 col-lg-6 offset-lg-3 mt-5 card">#}
-{#      <div class="card-body px-3 pb-4">#}
+
         <h1 class="h4 pt-2">Вакансии</h1>
         <p class="mt-2">У вас пока нет вакансий, но вы можете создать первую!</p>
         <a href="{% url 'vacancy_create' %}" class="btn btn-info mb-2">Добавить вакансию</a>
