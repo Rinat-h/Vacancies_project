@@ -7,7 +7,7 @@ from vacancies_project.settings import MEDIA_SPECIALITY_IMAGE_DIR, MEDIA_COMPANY
 class Company(models.Model):
     name = models.CharField(max_length=64)
     location = models.CharField(max_length=32)
-    logo = models.ImageField(upload_to=MEDIA_COMPANY_IMAGE_DIR)
+    logo = models.ImageField(upload_to=MEDIA_COMPANY_IMAGE_DIR, blank=True)
     description = models.TextField()
     employee_count = models.IntegerField()
     owner = models.OneToOneField(User, on_delete=models.CASCADE, null=False)
