@@ -1,11 +1,12 @@
+import datetime
+
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views import View
 
 from vacancies.forms import VacancyForm
 from vacancies.models import Vacancy, Company
-from django.contrib import messages
-import datetime
 
 
 class MyVacanciesStart(LoginRequiredMixin, View):

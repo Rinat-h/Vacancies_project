@@ -1,9 +1,9 @@
 from django.db.models import Count, Q
 from django.http import HttpResponseNotFound, HttpResponseServerError
 from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView
 from django.views.generic.base import TemplateView
-from django.urls import reverse
 
 from vacancies.forms import ApplicationForm, VacancySearchForm
 from vacancies.models import Vacancy, Specialty, Company
