@@ -15,7 +15,7 @@ class CompanyForm(forms.ModelForm):
             'location': 'География',
             'logo': 'Логотип',
             'employee_count': 'Количество человек в компании',
-            'description': 'Информация о компании'
+            'description': 'Информация о компании',
         }
 
     def __init__(self, *args, **kwargs):
@@ -32,7 +32,7 @@ class CompanyForm(forms.ModelForm):
                 Column('location'),
             ),
             'description',
-            Submit(name='Save', value='Сохранить')
+            Submit(name='Save', value='Сохранить'),
         )
 
 
@@ -54,7 +54,7 @@ class VacancyForm(forms.ModelForm):
             'salary_min': 'Зарплата от',
             'salary_max': 'Зарплата до',
             'skills': 'Требуемые навыки',
-            'description': 'Описание вакансии'
+            'description': 'Описание вакансии',
         }
 
     def __init__(self, *args, **kwargs):
@@ -64,15 +64,15 @@ class VacancyForm(forms.ModelForm):
         self.helper.layout = Layout(
             Row(
                 Column('title'),
-                Column('specialty')
+                Column('specialty'),
             ),
             Row(
                 Column('salary_min'),
-                Column('salary_max')
+                Column('salary_max'),
             ),
             'skills',
             'description',
-            Submit(name='Save', value='Сохранить')
+            Submit(name='Save', value='Сохранить'),
         )
         self.fields['skills'].widget = forms.Textarea(attrs={'rows': 2, 'cols': 25})
 
@@ -85,7 +85,7 @@ class ApplicationForm(forms.ModelForm):
         labels = {
             'written_username': 'Вас зовут',
             'written_phone': 'Ваш телефон',
-            'written_cover_letter': 'Сопроводительное письмо'
+            'written_cover_letter': 'Сопроводительное письмо',
         }
 
     def __init__(self, *args, **kwargs):
@@ -96,7 +96,7 @@ class ApplicationForm(forms.ModelForm):
             'written_username',
             'written_phone',
             'written_cover_letter',
-            Submit(name='Save', value='Отправить')
+            Submit(name='Save', value='Отправить'),
         )
 
 
@@ -116,7 +116,7 @@ class ResumeForm(forms.ModelForm):
             'grade': 'Квалификация',
             'education': 'Образование',
             'experience': 'Опыт работы',
-            'portfolio': 'Ссылка на портфолио'
+            'portfolio': 'Ссылка на портфолио',
         }
 
     def __init__(self, *args, **kwargs):
@@ -126,20 +126,20 @@ class ResumeForm(forms.ModelForm):
         self.helper.layout = Layout(
             Row(
                 Column('name'),
-                Column('surname')
+                Column('surname'),
             ),
             Row(
                 Column('status'),
-                Column('salary')
+                Column('salary'),
             ),
             Row(
                 Column('specialty'),
-                Column('grade')
+                Column('grade'),
             ),
             'education',
             'experience',
             'portfolio',
-            Submit(name='Save', value='Сохранить')
+            Submit(name='Save', value='Сохранить'),
         )
         self.fields['education'].widget = forms.Textarea(attrs={'rows': 4, 'cols': 25})
         self.fields['experience'].widget = forms.Textarea(attrs={'rows': 4, 'cols': 25})
@@ -157,5 +157,5 @@ class VacancySearchForm(forms.Form):
             Row(
                 Column('query'),
                 Column(Submit(name='Search', value='Найти')),
-            )
+            ),
         )

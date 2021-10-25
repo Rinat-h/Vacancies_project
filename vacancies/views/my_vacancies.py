@@ -19,7 +19,7 @@ class MyVacanciesStart(LoginRequiredMixin, View):
             return redirect('vacancy_list')
         else:
             return render(request, 'vacancies/vacancy-create.html', context={
-                'title': 'Создать вакансии'
+                'title': 'Создать вакансии',
             })
 
 
@@ -28,7 +28,7 @@ class MyVacanciesCreate(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'vacancies/vacancy-edit.html', context={
             'form': VacancyForm,
-            'title': 'Вакансии компании'
+            'title': 'Вакансии компании',
         })
 
     def post(self, request):
@@ -43,7 +43,7 @@ class MyVacanciesCreate(LoginRequiredMixin, View):
             return redirect('vacancy_list')
         return render(request, 'vacancies/vacancy-edit.html', context={
             'form': form,
-            'title': 'Вакансии компании'
+            'title': 'Вакансии компании',
         })
 
 
@@ -56,7 +56,7 @@ class MyVacanciesEdit(LoginRequiredMixin, View):
         return render(request, 'vacancies/vacancy-edit.html', context={
             'form': form,
             'title': 'Вакансии компании',
-            'vacancy': vacancy
+            'vacancy': vacancy,
         })
 
     def post(self, request, pk):
@@ -73,7 +73,7 @@ class MyVacanciesEdit(LoginRequiredMixin, View):
         return render(request, 'vacancies/vacancy-edit.html', context={
             'form': form,
             'title': 'Вакансии компании',
-            'vacancy': vacancy
+            'vacancy': vacancy,
         })
 
 
@@ -84,7 +84,7 @@ class MyVacanciesList(LoginRequiredMixin, View):
         vacancies = Vacancy.objects.filter(company__in=company)
         return render(request, 'vacancies/vacancy-list.html', context={
             'vacancies_list': vacancies,
-            'title': 'Вакансии компании'
+            'title': 'Вакансии компании',
         })
 
 
@@ -93,5 +93,5 @@ class VacancySend(LoginRequiredMixin, View):
     def get(self, request, pk):
         return render(request, 'vacancies/sent.html', context={
             'pk': pk,
-            'title': 'Отклик отправлен'
+            'title': 'Отклик отправлен',
         })

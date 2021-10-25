@@ -46,6 +46,9 @@ class Application(models.Model):
     vacancy = models.ManyToManyField(Vacancy, related_name='applications')
     user = models.ManyToManyField(User, related_name="applications", null=False)
 
+    def __str__(self):
+        return f' {self.user} application for {self.vacancy}'
+
 
 class Resume(models.Model):
     Status = Choices('Не ищу работу', 'Рассматриваю предложения', 'Ищу работу')
@@ -61,3 +64,6 @@ class Resume(models.Model):
     education = models.TextField()
     experience = models.TextField()
     portfolio = models.CharField(max_length=64)
+
+    def __str__(self):
+        return f' {self.user} resume'

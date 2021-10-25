@@ -114,6 +114,6 @@ class VacancySearch(ListView):
         query = self.request.GET.get('s')
         if query:
             queryset = Vacancy.objects.filter(
-                Q(title__icontains=query) | Q(skills__icontains=query) | Q(description__icontains=query)
+                Q(title__icontains=query) | Q(skills__icontains=query) | Q(description__icontains=query),
             )
             return queryset

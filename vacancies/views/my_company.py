@@ -42,7 +42,7 @@ class CompanyUpdate(LoginRequiredMixin, View):
         company = get_object_or_404(Company, owner=request.user)
         form = CompanyForm(instance=company)
         return render(request, 'vacancies/company-edit.html', context={
-            'form': form
+            'form': form,
         })
 
     def post(self, request):

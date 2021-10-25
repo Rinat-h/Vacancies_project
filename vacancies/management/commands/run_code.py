@@ -1,4 +1,5 @@
 from django.core.management import BaseCommand
+from django.shortcuts import get_object_or_404
 
 from vacancies import data
 from vacancies.models import Vacancy, Company, Specialty
@@ -7,31 +8,22 @@ from vacancies.models import Vacancy, Company, Specialty
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        company_list = list()
+
         for company in data.companies:
-            company_list.append(Company(
+            new_company = Company(
                 name=company['title'],
                 location=company['location'],
                 description=company['description'],
-                employee_count=company['employee_count']
-            ))
-        for company in company_list:
-            company.save()
+                employee_count=company['employee_count'],
+            )
+            new_company.save()
 
-        specialty_list = list()
         for specialty in data.specialties:
-            specialty_list.append(Specialty(
+            new_specialty = Specialty(
                 code=specialty['code'],
-                title=specialty['title']
-            ))
-        for specialty in specialty_list:
-            specialty.save()
-
-        # функция для получения нужного эземпляра класса specialty для связи ManytoMany
-        def spec_by_vacan(specialty_from_vacan):
-            for specialty in specialty_list:
-                if specialty.code == specialty_from_vacan:
-                    return specialty
+                title=specialty['title'],
+            )
+            new_specialty.save()
 
         for job in data.jobs:
             vacancy = Vacancy(
@@ -40,8 +32,8 @@ class Command(BaseCommand):
                 salary_max=job['salary_to'],
                 published_at=job['posted'],
                 skills=job['skills'],
-                description=job['description']
+                description=job['description'],
             )
             vacancy.save()
-            vacancy.company.add(company_list[int(job['company']) - 1])
-            vacancy.specialty.add(spec_by_vacan(job['specialty']))
+            vacancy.company.add(get_object_or_404(Company, pk=job['company']))
+            vacancy.specialty.add(get_object_or_404(Specialty, code=job['specialty']))

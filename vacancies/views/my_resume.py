@@ -14,7 +14,7 @@ class MyResumeStart(LoginRequiredMixin, View):
             return redirect('resume_edit')
         else:
             return render(request, 'vacancies/resume-create.html', context={
-                'title': 'Создать резюме'
+                'title': 'Создать резюме',
             })
 
 
@@ -23,7 +23,7 @@ class MyResumeCreate(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'vacancies/resume-edit.html', context={
             'form': ResumeForm,
-            'title': 'Создать резюме'
+            'title': 'Создать резюме',
         })
 
     def post(self, request):
@@ -37,7 +37,7 @@ class MyResumeCreate(LoginRequiredMixin, View):
             return redirect('resume_edit')
         return render(request, 'vacancies/resume-edit.html', context={
             'form': form,
-            'title': 'Создать резюме'
+            'title': 'Создать резюме',
         })
 
 
@@ -48,7 +48,7 @@ class MyResumeUpdate(LoginRequiredMixin, View):
         form = ResumeForm(instance=resume)
         return render(request, 'vacancies/resume-edit.html', context={
             'form': form,
-            'title': 'Редактировать резюме'
+            'title': 'Редактировать резюме',
         })
 
     def post(self, request):
@@ -63,5 +63,5 @@ class MyResumeUpdate(LoginRequiredMixin, View):
             return redirect('resume_edit')
         return render(request, 'vacancies/resume-edit.html', context={
             'form': form,
-            'title': 'Редактировать резюме'
+            'title': 'Редактировать резюме',
         })
