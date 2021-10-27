@@ -3,7 +3,9 @@ import datetime
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render, get_object_or_404
+from django.urls import reverse_lazy
 from django.views import View
+from django.views.generic import DeleteView
 
 from vacancies.forms import VacancyForm
 from vacancies.models import Vacancy, Company
@@ -95,3 +97,13 @@ class VacancySend(LoginRequiredMixin, View):
             'pk': pk,
             'title': 'Отклик отправлен',
         })
+
+
+class VacancyDelete(LoginRequiredMixin, DeleteView):
+    model = Vacancy
+    success_url = reverse_lazy('vacancy_start')
+
+    def get_object(self, **kwargs):
+        company = get_object_or_404(Company, owner=self.request.user)
+        vacancy = get_object_or_404(Vacancy, company=company, pk=self.kwargs['pk'])
+        return vacancy

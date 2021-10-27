@@ -23,7 +23,7 @@ from accounts.views import MyLoginView, MySignupView
 from vacancies.views.my_company import CompanyCreate, CompanyUpdate, CompanyLetsstart
 from vacancies.views.my_resume import MyResumeStart, MyResumeCreate, MyResumeUpdate
 from vacancies.views.my_vacancies import MyVacanciesStart, MyVacanciesCreate, MyVacanciesList, MyVacanciesEdit, \
-    VacancySend
+    VacancySend, VacancyDelete
 from vacancies.views.views import MainView, VacanciesAllView, VacancyDetailView, CompanyDetailView, \
     VacanciesBySpeciality, \
     custom_handler404, custom_handler500, VacancySearch
@@ -53,6 +53,7 @@ urlpatterns = [
     path('myresume/create/', MyResumeCreate.as_view(), name='resume_create'),
     path('myresume/', MyResumeUpdate.as_view(), name='resume_edit'),
     path('search', VacancySearch.as_view(), name='vacancy_search'),
+    path('vacancies/<int:pk>/delete', VacancyDelete.as_view(), name='vacancy_delete')
 ]
 
 if settings.DEBUG:
