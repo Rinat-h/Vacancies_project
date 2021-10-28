@@ -76,8 +76,7 @@ class VacancyDetailView(CreateView):
     def form_valid(self, form):
         vacancy = get_object_or_404(Vacancy, pk=self.kwargs['pk'])
         form = ApplicationForm(self.request.POST)
-        application_form = form.save(commit=False)
-        application_form.save()
+        application_form = form.save()
         application_form.user.add(self.request.user)
         application_form.vacancy.add(vacancy)
         return super().form_valid(form)

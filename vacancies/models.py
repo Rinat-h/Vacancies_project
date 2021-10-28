@@ -44,7 +44,7 @@ class Application(models.Model):
     written_phone = models.CharField(max_length=32)
     written_cover_letter = models.TextField()
     vacancy = models.ManyToManyField(Vacancy, related_name='applications')
-    user = models.ManyToManyField(User, related_name="applications", null=False)
+    user = models.ManyToManyField(User, related_name="applications")
 
     def __str__(self):
         return f' {self.user} application for {self.vacancy}'

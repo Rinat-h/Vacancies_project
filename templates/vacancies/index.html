@@ -1,4 +1,5 @@
 {% extends 'vacancies/base.html' %}
+{% load static %}
 {% load crispy_forms_tags %}
 {% load filters %}
 
@@ -48,7 +49,11 @@
         <div class="col-6 col-md-6 col-lg-3">
           <div class="card pt-4 text-center mb-4">
             <a href="{% url 'CompanyDetailView' company.pk %}" style="max-width: 150px;" class="mx-auto d-block">
+                {% if company.logo %}
               <img class="mx-auto d-block mw-100" src="{{ company.logo.url }}" alt="">
+                {% else %}
+              <img class="mx-auto d-block mw-100" src="{% static 'default_logo.png' %}" alt="">
+                {% endif %}
             </a>
             <div class="card-body">
               <p class="card-text"><a href="{% url 'CompanyDetailView' company.pk %}">{{ company.num_vacan|ru_pluralize:'вакансия,вакансии,вакансий' }}</a></p>

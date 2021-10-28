@@ -1,4 +1,5 @@
 {% extends 'vacancies/base.html' %}
+{% load static %}
 
 {% load crispy_forms_tags %}
 
@@ -15,7 +16,11 @@
       <div class="col-12 col-lg-8">
         <section class="pl-3">
           {% for company in vacancy.company.all %}
+              {% if company.logo %}
           <a href="{% url 'CompanyDetailView' company.pk %}"><img src="{{ company.logo.url }}" width="130" height="80" alt=""></a>
+              {% else %}
+          <a href="{% url 'CompanyDetailView' company.pk %}"><img src="{% static 'default_logo.png' %}" width="130" height="80" alt=""></a>
+              {% endif %}
           {% endfor %}
           <div class="d-flex align-items-baseline align-content-baseline">
             <h1 class="h2 mt-4 font-weight-bold" >{{ vacancy.title }}</h1>

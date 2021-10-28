@@ -1,4 +1,5 @@
 {% extends 'vacancies/base.html' %}
+{% load static %}
 {% load filters %}
 
 {% block container %}
@@ -8,8 +9,11 @@
       <p><a href="{{ previous_page }}">Назад</a></p>
     </div>
     <section>
-      <div class="text-center">
-        <img src="{{ company.logo.url }}" width="130" height="80" alt="">
+        {% if company.logo %}
+      <div class="text-center"> <img src="{{ company.logo.url }}" width="130" height="80" alt="">
+          {% else %}
+        <div class="text-center"> <img src="{% static 'default_logo.png' %}" width="130" height="80" alt="">
+          {% endif %}
       </div>
       <h1 class="h1 text-center mx-auto mt-0 pt-1" style="font-size: 70px;"><strong>{{ company.name }}</strong></h1>
       <p class="text-center pt-1">Компания, {{ company.location }}, {{ company.companies.count|ru_pluralize:'вакансия,вакансии,вакансий' }}</p>
@@ -28,7 +32,11 @@
                   <p class="text-muted pt-1">{{ vacancy.published_at|date:"d E" }}</p>
                 </div>
                 <div class="col-12 col-md-4 col-lg-3 d-flex align-items-end">
+                    {% if company.logo %}
                   <img src="{{ company.logo.url }}" width="130" height="80" alt="">
+                    {% else %}
+                  <img src="{% static 'default_logo.png' %}" width="130" height="80" alt="">
+                    {% endif %}
                 </div>
               </div>
             </div>
