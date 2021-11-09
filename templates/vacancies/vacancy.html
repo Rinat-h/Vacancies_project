@@ -10,7 +10,11 @@
     <div class="row mt-5">
       <div class="col-12 col-lg-2">
         <div class="pl-3 mb-5">
+           {% if previous_page %}
           <p><a href="{{ previous_page }}">Назад</a></p>
+            {% else %}
+          <p><a href="{% url 'MainView' %}">Назад</a></p>
+            {% endif %}
         </div>
       </div>
       <div class="col-12 col-lg-8">

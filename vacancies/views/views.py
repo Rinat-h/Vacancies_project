@@ -70,7 +70,7 @@ class VacancyDetailView(CreateView):
 
     def get_context_data(self, **kwargs):
         kwargs['vacancy'] = get_object_or_404(Vacancy, pk=self.kwargs['pk'])
-        kwargs['previous_page'] = self.request.META['HTTP_REFERER']
+        kwargs['previous_page'] = self.request.META.get('HTTP_REFERER')
         return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
@@ -88,7 +88,7 @@ class CompanyDetailView(DetailView):
     context_object_name = 'company'
 
     def get_context_data(self, **kwargs):
-        kwargs['previous_page'] = self.request.META['HTTP_REFERER']
+        kwargs['previous_page'] = self.request.META.get('HTTP_REFERER')
         return super().get_context_data(**kwargs)
 
 

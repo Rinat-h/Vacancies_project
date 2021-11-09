@@ -6,7 +6,11 @@
 
   <main class="container mt-3">
     <div class="navbar mt-5">
-      <p><a href="{{ previous_page }}">Назад</a></p>
+      {% if previous_page %}
+            <p><a href="{{ previous_page }}">Назад</a></p>
+      {% else %}
+            <p><a href="{% url 'MainView' %}">Назад</a></p>
+      {% endif %}
     </div>
     <section>
         {% if company.logo %}
